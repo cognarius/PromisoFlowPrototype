@@ -2,7 +2,7 @@ import { Injectable, Signal, signal } from '@angular/core';
 import { APP_SCHEMA_VERSION, createDemoState } from './demo-data';
 import { Activity, AppState, EntityType, MigrationState } from './models';
 
-const STATE_KEY = 'potok.data';
+const STATE_KEY = 'promisoflow.data';
 
 export const entityCollectionKeys = [
   'clients',

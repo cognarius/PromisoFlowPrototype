@@ -5,7 +5,7 @@
 | Русский                        | English                                   |
 | ------------------------------ | ----------------------------------------- |
 | CRM исполнения и прибыли       | Execution & Profit CRM                    |
-| Поток                          | Potok                                     |
+| PromisoFlow                    | PromisoFlow                               |
 | Цикл результата                | Outcome cycle                             |
 | Клиент                         | Client                                    |
 | Предложение                    | Proposal                                  |

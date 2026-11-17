@@ -20,7 +20,7 @@ describe('migration-first demo', () => {
     const migration = TestBed.inject(MigrationService);
     const store = TestBed.inject(AppStore);
     const initialClients = store.state().clients.length;
-    localStorage.setItem('potok.language', 'en-US');
+    localStorage.setItem('promisoflow.language', 'en-US');
 
     migration.useDemo();
     migration.analyze();
@@ -47,6 +47,6 @@ describe('migration-first demo', () => {
     migration.rollback();
     expect(store.state().clients).toHaveLength(initialClients);
     expect(migration.state.status).toBe('rolled_back');
-    expect(localStorage.getItem('potok.language')).toBe('en-US');
+    expect(localStorage.getItem('promisoflow.language')).toBe('en-US');
   });
 });

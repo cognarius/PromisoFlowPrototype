@@ -67,7 +67,7 @@ export class MigrationService {
     this.save({
       ...initialMigration(),
       source: this.state.source,
-      fileName: 'potok-migration-demo.csv',
+      fileName: 'promisoflow-migration-demo.csv',
       csvContent: DEMO_CSV,
       step: 1,
     });

@@ -3,8 +3,8 @@ import { Inject, Injectable, signal } from '@angular/core';
 import { Language, LanguageShort, LocalizedText } from './models';
 import { TranslationKey, translationEntry } from './translations';
 
-const LANGUAGE_KEY = 'potok.language';
-const PORTAL_LANGUAGE_KEY = 'potok.portal-language';
+const LANGUAGE_KEY = 'promisoflow.language';
+const PORTAL_LANGUAGE_KEY = 'promisoflow.portal-language';
 
 function storedLanguage(key: string): Language | null {
   if (typeof localStorage === 'undefined') return null;

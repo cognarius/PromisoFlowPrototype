@@ -3,8 +3,8 @@ import { existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 
 const root = process.cwd();
-const baseUrl = process.env.POTOK_E2E_URL ?? 'http://127.0.0.1:4200';
-const debugPort = Number(process.env.POTOK_CHROME_DEBUG_PORT ?? 9333);
+const baseUrl = process.env.PROMISOFLOW_E2E_URL ?? 'http://127.0.0.1:4200';
+const debugPort = Number(process.env.PROMISOFLOW_CHROME_DEBUG_PORT ?? 9333);
 const artifacts = process.argv.includes('--artifacts') ? join(root, 'tmp', 'browser-check') : null;
 const profile = join(root, 'tmp', `chrome-profile-${process.pid}`);
 let server;
@@ -165,7 +165,7 @@ async function setLanguage(language) {
     true,
   );
   await waitFor(
-    `document.documentElement.lang === ${JSON.stringify(language)} && localStorage.getItem('potok.language') === ${JSON.stringify(language)}`,
+    `document.documentElement.lang === ${JSON.stringify(language)} && localStorage.getItem('promisoflow.language') === ${JSON.stringify(language)}`,
     `language ${language}`,
   );
 }
@@ -335,7 +335,7 @@ async function runScenario(language) {
   );
   await clickText(t.confirm);
   const projectId = await evaluate(
-    `JSON.parse(localStorage.getItem('potok.data')).projects.find((project) => project.contractId === location.pathname.split('/').pop()).id`,
+    `JSON.parse(localStorage.getItem('promisoflow.data')).projects.find((project) => project.contractId === location.pathname.split('/').pop()).id`,
   );
   await evaluate(
     `document.querySelector('a[href="/projects/' + ${JSON.stringify(projectId)} + '"]').click()`,
@@ -350,12 +350,12 @@ async function runScenario(language) {
   await waitFor("document.querySelector('app-money')", 'money register');
 
   const invoiceId = await evaluate(
-    `JSON.parse(localStorage.getItem('potok.data')).invoices.find((invoice) => invoice.projectId === ${JSON.stringify(projectId)}).id`,
+    `JSON.parse(localStorage.getItem('promisoflow.data')).invoices.find((invoice) => invoice.projectId === ${JSON.stringify(projectId)}).id`,
   );
   await waitFor(`document.querySelector('tr.focused')`, 'new invoice highlighted');
   await clickText(t.issue, "document.querySelector('tr.focused')");
   await waitFor(
-    `JSON.parse(localStorage.getItem('potok.data')).invoices.find((invoice) => invoice.id === ${JSON.stringify(invoiceId)}).status === 'issued'`,
+    `JSON.parse(localStorage.getItem('promisoflow.data')).invoices.find((invoice) => invoice.id === ${JSON.stringify(invoiceId)}).status === 'issued'`,
     'invoice issued',
   );
   await clickText(t.payment, "document.querySelector('tr.focused')");
@@ -364,7 +364,7 @@ async function runScenario(language) {
   await waitFor("!document.querySelector('.modal')", 'payment created');
   await clickText(t.match, "document.querySelector('.matching-card')");
   await waitFor(
-    `JSON.parse(localStorage.getItem('potok.data')).invoices.find((invoice) => invoice.id === ${JSON.stringify(invoiceId)}).status === 'paid'`,
+    `JSON.parse(localStorage.getItem('promisoflow.data')).invoices.find((invoice) => invoice.id === ${JSON.stringify(invoiceId)}).status === 'paid'`,
     'invoice fully paid',
   );
 
@@ -382,7 +382,7 @@ async function runScenario(language) {
     await clickText(t.cost, scope);
   }
   await waitFor(
-    `JSON.parse(localStorage.getItem('potok.data')).costs.filter((cost) => cost.projectId === ${JSON.stringify(projectId)}).length === 2`,
+    `JSON.parse(localStorage.getItem('promisoflow.data')).costs.filter((cost) => cost.projectId === ${JSON.stringify(projectId)}).length === 2`,
     'two cost records',
   );
   await evaluate('document.querySelector(\'.calculation-card a[href^="/margins"]\').click()');

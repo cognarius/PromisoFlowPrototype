@@ -1071,7 +1071,7 @@ export class WorkflowService {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = url;
-    anchor.download = 'potok-demo-export.json';
+    anchor.download = 'promisoflow-demo-export.json';
     anchor.click();
     URL.revokeObjectURL(url);
   }

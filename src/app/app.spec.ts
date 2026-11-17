@@ -31,7 +31,7 @@ describe('App', () => {
     fixture.detectChanges();
     expect(i18n.language()).toBe('en-US');
     expect(document.documentElement.lang).toBe('en-US');
-    expect(localStorage.getItem('potok.language')).toBe('en-US');
+    expect(localStorage.getItem('promisoflow.language')).toBe('en-US');
     expect(
       (fixture.nativeElement as HTMLElement).querySelector('.topbar h1')?.textContent,
     ).toContain('Execution & profit control');

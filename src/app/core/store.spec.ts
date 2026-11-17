@@ -10,7 +10,7 @@ describe('AppStore', () => {
 
     const restored = new AppStore();
     expect(restored.clients.get('client-vector')?.repeatPotential).toBe(0.77);
-    expect(localStorage.getItem('potok.data')).toContain('"repeatPotential":0.77');
+    expect(localStorage.getItem('promisoflow.data')).toContain('"repeatPotential":0.77');
   });
 
   it('does not expose mutable repository objects', () => {
@@ -21,9 +21,9 @@ describe('AppStore', () => {
   });
 
   it('resets all business data without resetting language, portal language, or role', () => {
-    localStorage.setItem('potok.language', 'en-US');
-    localStorage.setItem('potok.portal-language', 'ru-RU');
-    localStorage.setItem('potok.role', 'finance');
+    localStorage.setItem('promisoflow.language', 'en-US');
+    localStorage.setItem('promisoflow.portal-language', 'ru-RU');
+    localStorage.setItem('promisoflow.role', 'finance');
 
     const store = new AppStore();
     store.clients.update('client-vector', { repeatPotential: 0.1 });
@@ -31,13 +31,13 @@ describe('AppStore', () => {
     store.reset();
 
     expect(store.snapshot()).toEqual(createDemoState());
-    expect(localStorage.getItem('potok.language')).toBe('en-US');
-    expect(localStorage.getItem('potok.portal-language')).toBe('ru-RU');
-    expect(localStorage.getItem('potok.role')).toBe('finance');
+    expect(localStorage.getItem('promisoflow.language')).toBe('en-US');
+    expect(localStorage.getItem('promisoflow.portal-language')).toBe('ru-RU');
+    expect(localStorage.getItem('promisoflow.role')).toBe('finance');
   });
 
   it('falls back to deterministic data when storage is invalid', () => {
-    localStorage.setItem('potok.data', '{invalid json');
+    localStorage.setItem('promisoflow.data', '{invalid json');
     expect(new AppStore().snapshot()).toEqual(createDemoState());
   });
 

@@ -1,4 +1,4 @@
-# 5–7 minute demo — Potok
+# 5–7 minute demo — PromisoFlow
 
 **Goal:** demonstrate the connected outcome cycle, not a nominal sales pipeline: proposal → delivery → documents → cash → margin → next action. Start as **Owner / executive**, select English, and reset demo data from **Execution & profit control** if needed.
 
@@ -48,4 +48,4 @@ Choose one ending for the audience:
 - **Client portal:** switch to **External client**, change the portal language independently, and request changes. Return to an internal role: the project is blocked and a next action exists. Costs, margin, and internal comments are not exposed.
 - **Migration:** open **Test migration**, use the demo CSV, and show field mapping, duplicates, missing owners, files not transferred, the test run, and rollback.
 
-**Closing line:** “Potok shows not just the deal value, but what to do today to deliver the promise, collect the cash, and protect margin.”
+**Closing line:** “PromisoFlow shows not just the deal value, but what to do today to deliver the promise, collect the cash, and protect margin.”

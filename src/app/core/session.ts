@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { RoleCode } from './models';
 
-const ROLE_KEY = 'potok.role';
+const ROLE_KEY = 'promisoflow.role';
 const roles: RoleCode[] = ['owner', 'sales', 'project', 'finance', 'client'];
 
 @Injectable({ providedIn: 'root' })
