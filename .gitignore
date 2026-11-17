@@ -29,6 +29,12 @@ yarn-error.log
 !.vscode/mcp.json
 .history/*
 
+# Local agent and design tooling
+/.agents/
+/.kimi-design/
+/.tools/
+/.vscode/
+
 # Miscellaneous
 /.angular/cache
 .sass-cache/
@@ -42,3 +48,4 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
