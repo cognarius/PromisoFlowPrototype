@@ -1,0 +1,152 @@
+<div class="app-shell">
+  <aside class="sidebar" [class.sidebar--open]="mobileNavigationOpen()">
+    <a
+      class="brand"
+      [routerLink]="session.role() === 'client' ? '/portal' : '/pulse'"
+      (click)="mobileNavigationOpen.set(false)"
+      ><span class="brand__mark"><i class="fa-solid fa-arrows-rotate" aria-hidden="true"></i></span
+      ><span class="brand__name">{{ t('app.name') }}</span></a
+    >
+    <div class="sidebar__divider"></div>
+    <p class="sidebar__caption">{{ t('nav.caption') }}</p>
+    <nav [attr.aria-label]="t('nav.caption')">
+      @for (item of visibleNavigation(primaryNavigation); track item.route) {
+        <a
+          class="nav-item"
+          [routerLink]="item.route"
+          routerLinkActive="nav-item--active"
+          (click)="mobileNavigationOpen.set(false)"
+          ><i [class]="item.icon" aria-hidden="true"></i><span>{{ t(item.key) }}</span>
+          @if (item.route === '/money' && moneyBadge()) {
+            <span class="nav-badge">{{ moneyBadge() }}</span>
+          }
+        </a>
+      }
+    </nav>
+    @if (visibleNavigation(workspaceNavigation).length) {
+      <p class="sidebar__caption sidebar__workspace">{{ t('nav.workspace') }}</p>
+      <nav [attr.aria-label]="t('nav.workspace')">
+        @for (item of visibleNavigation(workspaceNavigation); track item.route) {
+          <a
+            class="nav-item"
+            [routerLink]="item.route"
+            routerLinkActive="nav-item--active"
+            (click)="mobileNavigationOpen.set(false)"
+            ><i [class]="item.icon" aria-hidden="true"></i><span>{{ t(item.key) }}</span></a
+          >
+        }
+      </nav>
+    }
+    <div class="sidebar__spacer"></div>
+    <div class="data-card">
+      <strong>{{ t('common.dataCompleteness') }} {{ completeness() }}%</strong
+      ><span>{{ t('common.completenessHint') }}</span>
+      <div class="progress"><span [style.width.%]="completeness()"></span></div>
+    </div>
+    <div class="sidebar__user">
+      <span class="avatar" aria-hidden="true">{{ userInitials() }}</span><span
+        ><strong>{{ userName() }}</strong
+        ><small>{{ t(roleKey(session.role())) }}</small></span
+      >
+    </div>
+  </aside>
+  @if (mobileNavigationOpen()) {
+    <button
+      class="sidebar-backdrop"
+      (click)="mobileNavigationOpen.set(false)"
+      [attr.aria-label]="t('nav.close')"
+    ></button>
+  }
+  <div class="main-area">
+    <header class="topbar">
+      <div class="topbar__title">
+        <button
+          class="icon-button mobile-menu"
+          (click)="mobileNavigationOpen.set(true)"
+          [attr.aria-label]="t('nav.open')"
+        >
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+        <div>
+          <h1>{{ t(pageKey()) }}</h1>
+          <p>{{ t(pageSubtitleKey()) }}</p>
+        </div>
+      </div>
+      <div class="topbar__controls">
+        @if (!isPortal()) {
+          <label class="search-field topbar-search"
+            ><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i
+            ><span class="sr-only">{{ t('common.search') }}</span
+            ><input
+              [(ngModel)]="searchQuery"
+              (keyup.enter)="search()"
+              [placeholder]="t('common.searchPlaceholder')"
+          /></label>
+          @if (session.canManageSales()) {
+            <a class="btn btn--primary topbar-cta" routerLink="/proposals/new"
+              ><i class="fa-solid fa-plus" aria-hidden="true"></i>{{ t('common.newProposal') }}</a
+            >
+          }
+        }
+        <label class="role-control"
+          ><span class="sr-only">{{ t('common.role') }}</span
+          ><select
+            [ngModel]="session.role()"
+            (ngModelChange)="setRole($event)"
+            [attr.aria-label]="t('common.role')"
+          >
+            @for (role of session.roles; track role) {
+              <option [value]="role">{{ t(roleKey(role)) }}</option>
+            }
+          </select></label
+        >
+        @if (!isPortal()) {
+          <div class="language-switch" role="group" [attr.aria-label]="t('common.language')">
+            <button
+              type="button"
+              [class.active]="i18n.language() === 'ru-RU'"
+              (click)="setLanguage('ru-RU')"
+              [attr.aria-pressed]="i18n.language() === 'ru-RU'"
+            >
+              RU</button
+            ><button
+              type="button"
+              [class.active]="i18n.language() === 'en-US'"
+              (click)="setLanguage('en-US')"
+              [attr.aria-pressed]="i18n.language() === 'en-US'"
+            >
+              EN
+            </button>
+          </div>
+        }
+      </div>
+    </header>
+    <main class="content"><router-outlet /></main>
+  </div>
+</div>
+@if (ui.toast()) {
+  <div class="toast" role="status" aria-live="polite">{{ ui.toast() }}</div>
+}
+@if (ui.confirmRequest(); as request) {
+  <div class="modal-backdrop" role="presentation" (click)="ui.closeConfirmation()">
+    <section
+      class="modal"
+      role="alertdialog"
+      aria-modal="true"
+      [attr.aria-label]="i18n.t(request.message, {}, request.portal)"
+      (click)="$event.stopPropagation()"
+    >
+      <h2>{{ i18n.t('common.confirm', {}, request.portal) }}</h2>
+      <p>{{ i18n.t(request.message, {}, request.portal) }}</p>
+      <div class="modal__actions">
+        <button class="btn" (click)="ui.closeConfirmation()">
+          {{ i18n.t('common.cancel', {}, request.portal) }}</button><button
+          class="btn btn--danger"
+          (click)="ui.acceptConfirmation()"
+        >
+          {{ i18n.t('common.confirm', {}, request.portal) }}
+        </button>
+      </div>
+    </section>
+  </div>
+}
